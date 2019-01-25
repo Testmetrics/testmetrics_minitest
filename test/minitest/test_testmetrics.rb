@@ -22,6 +22,11 @@ class TestMinitest::MockTestSuite < Minitest::Test
   def test_pass
     pass
   end
+
+  def test_too_slow
+    sleep(1)
+    assert true
+  end
 end
 
 class TestMinitest::SecondMockTestSuite < Minitest::Test
