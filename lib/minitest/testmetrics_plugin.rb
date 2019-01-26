@@ -78,7 +78,7 @@ module Minitest
       TRAVIS_EVENT_TYPE
       CIRCLE_BRANCH
       CI_COMMIT_REF_NAME
-      BRANCH_NAME
+      SEMAPHORE_GIT_BRANCH
     ].freeze
     def git_branch
       correct_var = correct_var(BRANCH_VARS)
@@ -99,7 +99,7 @@ module Minitest
       end
     end
 
-    SHA_VARS = %w[TRAVIS_COMMIT CIRCLE_SHA1 CI_COMMIT_SHA REVISION].freeze
+    SHA_VARS = %w[TRAVIS_COMMIT CIRCLE_SHA1 CI_COMMIT_SHA SEMAPHORE_GIT_SHA].freeze
     def git_sha
       correct_var = correct_var(SHA_VARS)
       correct_var.nil? ? 'Unknown' : ENV[correct_var]
@@ -110,7 +110,7 @@ module Minitest
       when 'TRAVIS_COMMIT' then 'Travis CI'
       when 'CIRCLE_SHA1' then 'Circle CI'
       when 'CI_COMMIT_SHA' then 'Gitlab CI'
-      when 'REVISION' then 'Semaphore CI'
+      when 'SEMAPHORE_GIT_SHA' then 'Semaphore CI'
       else 'Unknown'
       end
     end
