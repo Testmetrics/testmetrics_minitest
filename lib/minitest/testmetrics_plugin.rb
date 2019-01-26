@@ -55,22 +55,21 @@ module Minitest
 
     def report
       total_time = 0
+
       results.each do |name, class_results|
         class_results.each do |result|
           total_time += time_in_microseconds(result.time)
           result.name
-          testmetrics_results[:tests]<< {
+          testmetrics_results[:tests] << {
             name: "#{name}.#{result.name.delete("\0").delete("\x01").delete("\e")}",
             total_run_time: time_in_microseconds(result.time),
             state: state(result.failure)
           }
         end
-
-        testmetrics_results[:total_run_time] = total_time
-
-        puts "\nSending results to Testmetrics server..."
-        post_results(testmetrics_results) unless testmetrics_results[:key] == 'Unknown'
       end
+
+      testmetrics_results[:total_run_time] = total_time
+      post_results(testmetrics_results) unless testmetrics_results[:key] == 'Unknown'
     end
 
     private
@@ -121,6 +120,8 @@ module Minitest
     end
 
     def post_results(results)
+      puts "\nSending results to Testmetrics server..."
+
       Faraday.post do |req|
         req.url 'https://www.testmetrics.app/results'
         req.headers['Content-Type'] = 'application/json'

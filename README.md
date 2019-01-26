@@ -15,22 +15,16 @@ group :test do
 end
 ```
 
-Then, when you're running your tests in CI, you can pass the `--testmetrics`
-option to turn on the reporter:
+Then, right after your call to `require 'minitest'`, add
+`require 'minitest/testmetrics'` to enable the Testmetrics reporter.
 
-```
-bundle exec rake test --testmetrics
-```
-
-You can also turn on the reporter by requiring `'minitest/testmetrics'` in
-your test files.
+See [here](https://github.com/devonestes/sinatra/commit/6b5229d79f01c8f5ffb3ae2263c62b70d19da024) for a diff showing
+exactly what was needed to add Testmetrics to Sinatra - it's just 3 lines!
 
 In order for the metrics to be sent to Testmetrics, you must have your
 Testmetrics Project Key set in the `TESTMETRICS_PROJECT_KEY` environment
 variable in your CI environment. If this environment variable isn't set, the
 collected metrics for your CI run will be discarded.
-
-This key should be kept private and not exposed to the public.
 
 ## License
 
